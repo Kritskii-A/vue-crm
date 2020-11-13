@@ -8,14 +8,38 @@ import dateFilter from "@/filters/date.filter"; // импортируем фил
 import messagePlugin from "@/commons/message.plugin"; // подключаем вывод всплывающих уведомлений
 import "materialize-css/dist/js/materialize.min.js"; // импортируем стили
 
+import firebase from "firebase/app"; // импорт firebase
+import "firebase/auth";
+import "firebase/database";
+
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate); // регистрируем валидатор после импорта
 Vue.use(messagePlugin); // регистрируем вывод уведомлений после импорта
 Vue.filter("date", dateFilter); // регистрируем фильтр
 
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
+firebase.initializeApp({
+  apiKey: "AIzaSyDTg3Wz175Vf1DaAPra3z4fXzQvMK8QGFU",
+  authDomain: "vue-crm-aa0d4.firebaseapp.com",
+  databaseURL: "https://vue-crm-aa0d4.firebaseio.com",
+  projectId: "vue-crm-aa0d4",
+  storageBucket: "vue-crm-aa0d4.appspot.com",
+  messagingSenderId: "706344883631",
+  appId: "1:706344883631:web:afd28167d4608cfaf14b5a",
+  measurementId: "G-4Y0QF7H7JX",
+});
+
+// создадим переменную для избежания дубля запуска приложения
+let app;
+
+// проверка сессии
+firebase.auth().onAuthStateChanged(() => {
+  // рендерим приложение, если приложение не было запущено ранее
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      render: (h) => h(App),
+    }).$mount("#app");
+  }
+});

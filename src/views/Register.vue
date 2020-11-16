@@ -118,11 +118,10 @@ export default {
 
       try {
         await this.$store.dispatch("register", formData); // первый параментр - название экшена, вторым - объект с данными
+        this.$router.push("/"); //переадресация на главную
       } catch (e) {
         console.log(e);
       }
-
-      this.$router.push("/"); //переадресация на главную
     },
   },
 };

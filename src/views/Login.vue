@@ -104,10 +104,11 @@ export default {
 
       try {
         await this.$store.dispatch("login", formData);
-        this.$router.push("/"); //переадресация на главную
       } catch (e) {
         console.log(e);
       }
+
+      this.$router.push("/"); //переадресация на главную
     },
   },
 };

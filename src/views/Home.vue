@@ -3,7 +3,7 @@
     <div class="page-title">
       <h3>Счет</h3>
 
-      <button class="btn waves-effect waves-light btn-small">
+      <button class="btn waves-effect waves-light btn-small" @click="refresh">
         <i class="material-icons">refresh</i>
       </button>
     </div>
@@ -31,6 +31,14 @@ export default {
   async mounted() {
     this.currency = await this.$store.dispatch("fetchCurrency"); // получаем данные из index.js и записываем в переменную
     this.loading = false; // отключаем loader
+  },
+  methods: {
+    async refresh() {
+      // обновление данных
+      this.loading = true; // включаем отображение загрузки
+      this.currency = await this.$store.dispatch("fetchCurrency"); // получаем данные из index.js и записываем в переменную
+      this.loading = false; // отключаем loader
+    },
   },
   components: {
     HomeBill,

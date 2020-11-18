@@ -6,6 +6,7 @@ import router from "./router";
 import store from "./store";
 import dateFilter from "@/filters/date.filter"; // импортируем фильтр
 import messagePlugin from "@/commons/message.plugin"; // подключаем вывод всплывающих уведомлений
+import Loader from "@/components/app/Loader"; // импортируем лоадер
 import "materialize-css/dist/js/materialize.min.js"; // импортируем стили
 
 import firebase from "firebase/app"; // импорт firebase
@@ -16,6 +17,7 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuelidate); // регистрируем валидатор после импорта
 Vue.use(messagePlugin); // регистрируем вывод уведомлений после импорта
+Vue.component("Loader", Loader); // регистрируем лоадер
 Vue.filter("date", dateFilter); // регистрируем фильтр
 
 firebase.initializeApp({

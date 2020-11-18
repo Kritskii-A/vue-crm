@@ -16,7 +16,7 @@
             data-target="dropdown"
             ref="dropDownOpen"
           >
-            USER NAME
+            {{ name }}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -50,6 +50,11 @@ export default {
     async logout() {
       await this.$store.dispatch("logout");
       this.$router.push("/login?message=logout"); // переадресация
+    },
+  },
+  computed: {
+    name() {
+      return this.$store.getters.info.name; // получаем имя пользователя
     },
   },
   mounted() {

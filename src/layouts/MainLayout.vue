@@ -24,6 +24,12 @@ export default {
   data: () => ({
     isOpen: true,
   }),
+  async mounted() {
+    // проверяем есть ли у нас данные, если нет, то получаем их
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$store.dispatch("fetchInfo");
+    }
+  },
   components: { Navbar, Sidebar },
 };
 </script>

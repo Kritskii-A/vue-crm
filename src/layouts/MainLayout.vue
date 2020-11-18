@@ -31,12 +31,15 @@ export default {
   async mounted() {
     // проверяем есть ли у нас данные, если нет, то получаем их
     if (!Object.keys(this.$store.getters.info).length) {
-      this.$router.push("/login?message=auth"); // если пользователь не авторизован, то кидаем его на авторизацию
       await this.$store.dispatch("fetchInfo");
     }
     // отключаем лоадер, если данные получены
 
     this.loading = false;
+
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$router.push("/login?message=auth"); // если пользователь не авторизован, то кидаем его на авторизацию
+    }
   },
   components: { Navbar, Sidebar },
 };

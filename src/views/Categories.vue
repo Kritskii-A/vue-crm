@@ -5,7 +5,8 @@
     </div>
     <section>
       <div class="row">
-        <CategoryCreate />
+        <CategoryCreate @created="addNewCategory" />
+        <!-- Параметр @created нужно эмитить, для этого в файле categoryCreate после вывода ошибки прописываем эммит и название категории -->
         <CategoryEdit />
       </div>
     </section>
@@ -18,9 +19,18 @@ import CategoryEdit from "@/components/CategoryEdit"; // импортируем 
 
 export default {
   name: "categories", // имя этой страницы
+  data: () => ({
+    categories: [],
+  }),
   components: {
     CategoryCreate,
     CategoryEdit, // регистрируем компоненты
+  },
+  methods: {
+    addNewCategory(category) {
+      this.categories.push(category);
+      console.log(this.categories);
+    },
   },
 };
 </script>

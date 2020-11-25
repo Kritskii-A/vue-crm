@@ -71,7 +71,7 @@ export default {
       }
       try {
         // записываем значение в БД
-        await this.$store.dispatch("createCategory", {
+        const category = await this.$store.dispatch("createCategory", {
           title: this.title,
           limit: this.limit,
         });
@@ -83,6 +83,8 @@ export default {
         this.$v.$reset();
 
         this.$message("Категория была создана");
+
+        this.$emit("created", category);
       } catch (e) {
         console.log(e);
       }

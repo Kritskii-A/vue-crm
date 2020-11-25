@@ -70,11 +70,19 @@ export default {
         return;
       }
       try {
-        const category = await this.$store.dispatch("createCategory", {
+        // записываем значение в БД
+        await this.$store.dispatch("createCategory", {
           title: this.title,
           limit: this.limit,
         });
-        console.log(category);
+
+        // сбрасываем значения после отправки
+        this.title = "";
+        this.limit = this.$v.limit.$params.minValue.min;
+        // сбрасываем состояние формы
+        this.$v.$reset();
+
+        this.$message("Категория была создана");
       } catch (e) {
         console.log(e);
       }

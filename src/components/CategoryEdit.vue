@@ -7,7 +7,7 @@
 
       <form>
         <div class="input-field">
-          <select ref="select">
+          <select ref="select" v-model="current">
             <option v-for="c of categories" :key="c.id" :value="c.id">{{
               c.title
             }}</option>
@@ -68,10 +68,28 @@ export default {
     title: "",
     limit: 100,
     select: null,
+    current: null,
   }),
   validations: {
     title: { required },
     limit: { minValue: minValue(100) },
+  },
+  watch: {
+    // watch следит за изменениями
+    current(catId) {
+      // ищем категорию, которую выбрали
+      const { title, limit } = this.categories.find((c) => c.id === catId);
+      // записываем значения в поля
+      this.title = title;
+      this.limit = limit;
+    },
+  },
+  created() {
+    //created стартует сразу при открытии
+    const { id, title, limit } = this.categories[0]; // получаем значения категории по умолчанию и записываем их в поля
+    this.current = id;
+    this.title = title;
+    this.limit = limit;
   },
   mounted() {
     this.select = window.M.FormSelect.init(this.$refs.select);

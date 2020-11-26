@@ -5,7 +5,7 @@
         <h4>Редактировать</h4>
       </div>
 
-      <form>
+      <form @submit.prevent="submitHandler">
         <div class="input-field">
           <select ref="select" v-model="current">
             <option v-for="c of categories" :key="c.id" :value="c.id">{{
@@ -90,6 +90,28 @@ export default {
     this.current = id;
     this.title = title;
     this.limit = limit;
+  },
+  methods: {
+    async submitHandler() {
+      if (this.$v.$invalid) {
+        // проверяем есть ли ошибки
+        // если ошибки есть, то выводим ошибку
+        this.$v.$touch();
+        return;
+      }
+      try {
+        const categoryData = {
+          id: this.current,
+          title: this.title,
+          limit: this.limit,
+        };
+        await this.$store.dispatch("updateCategory", categoryData);
+
+        this.$message("Данные обновлены");
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
   mounted() {
     this.select = window.M.FormSelect.init(this.$refs.select);

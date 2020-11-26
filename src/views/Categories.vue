@@ -4,7 +4,8 @@
       <h3>Категории</h3>
     </div>
     <section>
-      <div class="row">
+      <Loader v-if="loading" />
+      <div class="row" v-else>
         <CategoryCreate @created="addNewCategory" />
         <!-- Параметр @created нужно эмитить, для этого в файле categoryCreate после вывода ошибки прописываем эммит и название категории -->
         <CategoryEdit />
@@ -16,15 +17,22 @@
 <script>
 import CategoryCreate from "@/components/CategoryCreate"; // импортируем создание категории
 import CategoryEdit from "@/components/CategoryEdit"; // импортируем редактирование категории
+import Loader from "../components/app/Loader.vue";
 
 export default {
   name: "categories", // имя этой страницы
   data: () => ({
     categories: [],
+    loading: true,
   }),
+  async mounted() {
+    this.categories = await this.$store.dispatch("fetchCategories"); // после загрузки закинем содержимое в categories
+    this.loading = false;
+  },
   components: {
     CategoryCreate,
-    CategoryEdit, // регистрируем компоненты
+    CategoryEdit,
+    Loader, // регистрируем компоненты
   },
   methods: {
     addNewCategory(category) {

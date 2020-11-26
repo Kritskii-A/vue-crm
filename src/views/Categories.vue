@@ -9,7 +9,13 @@
         <CategoryCreate @created="addNewCategory" />
         <!-- Параметр @created нужно эмитить, для этого в файле categoryCreate после вывода ошибки прописываем эммит и название категории -->
         <!-- Далее передаем значение по шаблону в переменной categories -->
-        <CategoryEdit :categories="categories" />
+        <CategoryEdit
+          v-if="categories.length"
+          :categories="categories"
+          :key="categories.length + updateCount"
+          @updated="updateCategories"
+        />
+        <p v-else class="center">Категорий нет</p>
       </div>
     </section>
   </div>
@@ -25,6 +31,7 @@ export default {
   data: () => ({
     categories: [],
     loading: true,
+    updateCount: 0, // для перерисовки формы добавляем в форму key и плюсуем
   }),
   async mounted() {
     this.categories = await this.$store.dispatch("fetchCategories"); // после загрузки закинем содержимое в categories
@@ -38,7 +45,13 @@ export default {
   methods: {
     addNewCategory(category) {
       this.categories.push(category);
-      console.log(this.categories);
+    },
+    updateCategories(category) {
+      const idx = this.categories.findIndex((c) => c.id === category.id); // прлучаем индекс категории в массиве
+      // обновляем данные
+      this.categories[idx].title = category.title;
+      this.categories[idx].limit = category.limit;
+      this.updateCount++;
     },
   },
 };

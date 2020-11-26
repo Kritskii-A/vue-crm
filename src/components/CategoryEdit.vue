@@ -108,6 +108,9 @@ export default {
         await this.$store.dispatch("updateCategory", categoryData);
 
         this.$message("Данные обновлены");
+
+        // обновляем информацию в текущих полях, передавая в categories.vue
+        this.$emit("updated", categoryData);
       } catch (e) {
         console.log(e);
       }

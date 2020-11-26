@@ -8,7 +8,8 @@
       <div class="row" v-else>
         <CategoryCreate @created="addNewCategory" />
         <!-- Параметр @created нужно эмитить, для этого в файле categoryCreate после вывода ошибки прописываем эммит и название категории -->
-        <CategoryEdit />
+        <!-- Далее передаем значение по шаблону в переменной categories -->
+        <CategoryEdit :categories="categories" />
       </div>
     </section>
   </div>

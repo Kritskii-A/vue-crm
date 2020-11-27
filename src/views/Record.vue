@@ -23,14 +23,26 @@
 
       <p>
         <label>
-          <input class="with-gap" name="type" type="radio" value="income" />
+          <input
+            class="with-gap"
+            name="type"
+            type="radio"
+            value="income"
+            v-model="type"
+          />
           <span>Доход</span>
         </label>
       </p>
 
       <p>
         <label>
-          <input class="with-gap" name="type" type="radio" value="outcome" />
+          <input
+            class="with-gap"
+            name="type"
+            type="radio"
+            value="outcome"
+            v-model="type"
+          />
           <span>Расход</span>
         </label>
       </p>
@@ -65,6 +77,7 @@ export default {
     select: null,
     categories: [],
     category: null,
+    type: "outcome", // radio button
   }),
   async mounted() {
     this.categories = await this.$store.dispatch("fetchCategories"); // получаем категории

@@ -11,7 +11,7 @@
       <router-link to="/categories">Добавить новую категорию</router-link>
     </p>
 
-    <form class="form" v-else>
+    <form class="form" v-else @submit.prevent="submitHandler">
       <div class="input-field">
         <select ref="select" v-model="category">
           <option v-for="c of categories" :key="c.id" :value="c.id">{{
@@ -48,15 +48,35 @@
       </p>
 
       <div class="input-field">
-        <input id="amount" type="number" />
+        <input
+          id="amount"
+          type="number"
+          v-model.number="amount"
+          :class="{ invalid: $v.amount.$dirty && !$v.amount.minValue }"
+        />
         <label for="amount">Сумма</label>
-        <span class="helper-text invalid">amount пароль</span>
+        <span
+          class="helper-text invalid"
+          v-if="$v.amount.$dirty && !$v.amount.minValue"
+          >Минимальное значение {{ $v.amount.$params.minValue.min }}</span
+        >
       </div>
 
       <div class="input-field">
-        <input id="description" type="text" />
+        <input
+          id="description"
+          type="text"
+          v-model="description"
+          :class="{
+            invalid: $v.description.$dirty && !$v.description.required,
+          }"
+        />
         <label for="description">Описание</label>
-        <span class="helper-text invalid">description пароль</span>
+        <span
+          class="helper-text invalid"
+          v-if="$v.description.$dirty && !$v.description.required"
+          >Введите описание</span
+        >
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
@@ -69,6 +89,7 @@
 
 <script>
 import Loader from "../components/app/Loader.vue";
+import { required, minValue } from "vuelidate/lib/validators";
 
 export default {
   name: "record",
@@ -78,7 +99,13 @@ export default {
     categories: [],
     category: null,
     type: "outcome", // radio button
+    amount: 1,
+    description: "",
   }),
+  validations: {
+    amount: { minValue: minValue(1) },
+    description: { required },
+  },
   async mounted() {
     this.categories = await this.$store.dispatch("fetchCategories"); // получаем категории
     this.loading = false; // отключаем loader
@@ -92,6 +119,7 @@ export default {
     // используем setTimeout, потому что иначе select еще не успеет отобразиться и отработать
     setTimeout(() => {
       this.select = window.M.FormSelect.init(this.$refs.select);
+      window.M.updateTextFields(); // правка заголовка у input
     }, 0);
   },
   destroyed() {
@@ -99,6 +127,16 @@ export default {
     if (this.select && this.select.destroy) {
       this.select.destroy();
     }
+  },
+  methods: {
+    submitHandler() {
+      if (this.$v.$invalid) {
+        // проверяем есть ли ошибки
+        // если ошибки есть, то выводим ошибку
+        this.$v.$touch();
+        return;
+      }
+    },
   },
   components: {
     Loader,

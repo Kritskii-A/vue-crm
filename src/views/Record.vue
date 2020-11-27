@@ -4,10 +4,19 @@
       <h3>Новая запись</h3>
     </div>
 
-    <form class="form">
+    <loader v-if="loading" />
+
+    <p class="center" v-else-if="!categories.length">
+      Категории не найдены.
+      <router-link to="/categories">Добавить новую категорию</router-link>
+    </p>
+
+    <form class="form" v-else>
       <div class="input-field">
-        <select>
-          <option>name cat</option>
+        <select ref="select" v-model="category">
+          <option v-for="c of categories" :key="c.id" :value="c.id">{{
+            c.title
+          }}</option>
         </select>
         <label>Выберите категорию</label>
       </div>
@@ -45,3 +54,41 @@
     </form>
   </div>
 </template>
+
+<script>
+import Loader from "../components/app/Loader.vue";
+
+export default {
+  name: "record",
+  data: () => ({
+    loading: true,
+    select: null,
+    categories: [],
+    category: null,
+  }),
+  async mounted() {
+    this.categories = await this.$store.dispatch("fetchCategories"); // получаем категории
+    this.loading = false; // отключаем loader
+
+    // отображаем значение по умолчанию при загрузке
+    if (this.categories.length) {
+      this.category = this.categories[0].id;
+    }
+
+    // включаем select
+    // используем setTimeout, потому что иначе select еще не успеет отобразиться и отработать
+    setTimeout(() => {
+      this.select = window.M.FormSelect.init(this.$refs.select);
+    }, 0);
+  },
+  destroyed() {
+    // избегаем утечки памяти, удаляем плагин
+    if (this.select && this.select.destroy) {
+      this.select.destroy();
+    }
+  },
+  components: {
+    Loader,
+  },
+};
+</script>

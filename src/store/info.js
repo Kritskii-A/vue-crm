@@ -40,7 +40,7 @@ export default {
         ).val(); // получаем значение поля инфо
         commit("setInfo", info);
       } catch (e) {
-        console.log(e);
+        commit("setError", e);
       }
     },
   },

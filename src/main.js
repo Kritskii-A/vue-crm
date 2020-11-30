@@ -7,6 +7,8 @@ import store from "./store";
 import dateFilter from "@/filters/date.filter"; // импортируем фильтр
 import currencyFilter from "@/filters/currency.filter"; // импортируем фильтр
 
+import tooltipDirective from "@/directives/tooltip.directive"; // испорт tooltip для планирования
+
 import messagePlugin from "@/commons/message.plugin"; // подключаем вывод всплывающих уведомлений
 import Loader from "@/components/app/Loader"; // импортируем лоадер
 import "materialize-css/dist/js/materialize.min.js"; // импортируем стили
@@ -21,6 +23,7 @@ Vue.use(Vuelidate); // регистрируем валидатор после и
 Vue.use(messagePlugin); // регистрируем вывод уведомлений после импорта
 Vue.component("Loader", Loader); // регистрируем лоадер
 Vue.filter("date", dateFilter); // регистрируем фильтр даты
+Vue.directive("tooltip", tooltipDirective); // регистрируем директиву тулптип для планирования
 Vue.filter("currency", currencyFilter); // регистрируем фильтр валюты
 
 firebase.initializeApp({

@@ -18,7 +18,7 @@
           <strong>{{ cat.title }}:</strong>
           {{ cat.spend | currency }} из {{ cat.limit | currency }}
         </p>
-        <div class="progress">
+        <div class="progress" v-tooltip="cat.tooltip" data-position="top">
           <div
             class="determinate"
             :class="[cat.progressColor]"
@@ -32,6 +32,7 @@
 
 <script>
 import { mapGetters } from "vuex"; // для вывода состояние счета
+import currencyFilter from "@/filters/currency.filter"; // испортируем фильтр для вывода значений
 import Loader from "../components/app/Loader.vue";
 export default {
   components: { Loader },
@@ -60,16 +61,20 @@ export default {
       const progressColor =
         percent < 60 ? "green" : percent < 100 ? "yellow" : "red"; // задаем цвет в зависимости от процентов
 
+      // считаем сколько осталось или на сколько превысили
+      const tooltipValue = cat.limit - spend;
+      const tooltip = `${
+        tooltipValue < 0 ? "Превышение на" : "Осталось"
+      } ${currencyFilter(Math.abs(tooltipValue))}`;
+
       return {
         ...cat,
         progressPercent,
         progressColor,
         spend, // сколько итого потрачено
+        tooltip,
       };
     });
-
-    console.log(records);
-    console.log(categories);
 
     this.loading = false;
   },

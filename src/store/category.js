@@ -36,6 +36,24 @@ export default {
         throw e; // останавливаем после ошибки
       }
     },
+    async fetchCategoryById({ commit, dispatch }, id) {
+      try {
+        const uid = await dispatch("getUid"); // ждем и получаем uid пользователя
+        const category =
+          (
+            await firebase
+              .database()
+              .ref(`/users/${uid}/categories`)
+              .child(id) // ищем по id
+              .once("value")
+          ) //получаем значения
+            .val() || {}; // получаем значения, и если вдруг ничего нет, то пвозвращаем пустой объект
+        return { ...category, id };
+      } catch (e) {
+        commit("setError", e); // передаем ошибку
+        throw e; // останавливаем после ошибки
+      }
+    },
     async updateCategory({ commit, dispatch }, { title, limit, id }) {
       try {
         const uid = await dispatch("getUid"); // ждем и получаем uid пользователя

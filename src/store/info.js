@@ -41,6 +41,7 @@ export default {
         commit("setInfo", info);
       } catch (e) {
         commit("setError", e);
+        throw e;
       }
     },
   },

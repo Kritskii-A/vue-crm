@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
   // to - куда идем, from - откуда, next - функция (например для редиректа)
 
   const currentUser = firebase.auth().currentUser; // проверяем есть ли пользователь
-  const requireAuth = to.matched.some((record) => record.meta.auth); // получаем нужна ли авторизация для доступа к странице
+  const requireAuth = to.meta.auth; // получаем нужна ли авторизация для доступа к странице
 
   // tckb нужна авторизация и данных о пользователе нет, то делаем редирект на логин
   if (requireAuth && !currentUser) {

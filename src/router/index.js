@@ -76,6 +76,8 @@ router.beforeEach((to, from, next) => {
   // tckb нужна авторизация и данных о пользователе нет, то делаем редирект на логин
   if (requireAuth && !currentUser) {
     next("/login?message=login");
+  } else if (!requireAuth && currentUser) {
+    next("/");
   } else {
     next();
   }

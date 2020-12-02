@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuelidate from "vuelidate"; // импортируем валидатор
+import Paginate from "vuejs-paginate"; // ипортируем пагинатор
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
@@ -22,6 +23,7 @@ Vue.config.productionTip = false;
 Vue.use(Vuelidate); // регистрируем валидатор после импорта
 Vue.use(messagePlugin); // регистрируем вывод уведомлений после импорта
 Vue.component("Loader", Loader); // регистрируем лоадер
+Vue.component("Paginate", Paginate); // регистрируем пагинатор
 Vue.filter("date", dateFilter); // регистрируем фильтр даты
 Vue.directive("tooltip", tooltipDirective); // регистрируем директиву тулптип для планирования
 Vue.filter("currency", currencyFilter); // регистрируем фильтр валюты

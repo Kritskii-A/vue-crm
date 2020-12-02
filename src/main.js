@@ -7,6 +7,7 @@ import router from "./router";
 import store from "./store";
 import dateFilter from "@/filters/date.filter"; // импортируем фильтр
 import currencyFilter from "@/filters/currency.filter"; // импортируем фильтр
+import localizeFilter from "@/filters/localize.filter"; // импортируем локализацию
 
 import tooltipDirective from "@/directives/tooltip.directive"; // испорт tooltip для планирования
 
@@ -25,6 +26,7 @@ Vue.use(messagePlugin); // регистрируем вывод уведомле�
 Vue.component("Loader", Loader); // регистрируем лоадер
 Vue.component("Paginate", Paginate); // регистрируем пагинатор
 Vue.filter("date", dateFilter); // регистрируем фильтр даты
+Vue.filter("localize", localizeFilter); // регистрируем фильтр локализации
 Vue.directive("tooltip", tooltipDirective); // регистрируем директиву тулптип для планирования
 Vue.filter("currency", currencyFilter); // регистрируем фильтр валюты
 

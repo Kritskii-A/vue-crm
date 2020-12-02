@@ -60,6 +60,15 @@ export default {
 
     this.loading = false;
   },
+  watch: {
+    $route(to) {
+      if (!to.query.page) {
+        // кликнули в сайдбаре на История
+        this.pageChangeHandler(1);
+        this.page = 1;
+      }
+    },
+  },
   components: {
     HistoryTable,
   },

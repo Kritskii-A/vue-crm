@@ -45,13 +45,15 @@ export default {
 
     // подключаем пагинацию
     this.setupPagination(
-      this.records.map((record) => {
+      this.records.map((record, index) => {
         return {
           ...record,
           categoryName: categories.find((c) => c.id === record.categoryId)
             .title, // получаем название категории
           typeClass: record.type === "income" ? "green" : "red", // выводим цвет поля тип
           typeText: record.type === "income" ? "Доход" : "Расход", // выводим текст поля тип
+
+          number: index + 1, // нумерация полей
         };
       })
     );

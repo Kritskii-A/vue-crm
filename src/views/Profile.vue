@@ -4,7 +4,7 @@
       <h3>Профиль</h3>
     </div>
 
-    <form class="form" @click.prevent="submitHandler">
+    <form class="form" @submit.prevent="submitHandler">
       <div class="input-field">
         <input
           id="description"
@@ -25,7 +25,7 @@
       <div class="switch">
         <label>
           English
-          <input type="checkbox" />
+          <input type="checkbox" v-model="isRuLocale" />
           <span class="lever"></span>
           Русский
         </label>
@@ -45,12 +45,14 @@ import { required } from "vuelidate/lib/validators"; // импортируем �
 export default {
   data: () => ({
     name: "",
+    isRuLocale: true,
   }),
   validations: {
     name: { required },
   },
   mounted() {
     this.name = this.info.name; // вставляем имя
+    this.isRuLocale = this.info.locale === "ru-RU"; // проверяем какая локализация стоит у пользователя
     // таймаут нужен, чтобы успела отрендериться страница
     setTimeout(() => {
       window.M.updateTextFields();
@@ -67,6 +69,7 @@ export default {
       try {
         await this.updateInfo({
           name: this.name,
+          locale: this.isRuLocale ? "ru-RU" : "en-US", // записываем в БД локализацию
         });
         this.$message("Данные обновлены");
       } catch (e) {

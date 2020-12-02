@@ -3,7 +3,7 @@
   <div v-else>
     <div class="app-main-layout">
       <Navbar @click="isOpen = !isOpen" />
-      <Sidebar v-model="isOpen" />
+      <Sidebar v-model="isOpen" :key="locale" />
       <main class="app-content" :class="{ full: !isOpen }">
         <div class="app-page">
           <router-view />
@@ -47,6 +47,10 @@ export default {
   computed: {
     error() {
       return this.$store.getters.error;
+    },
+    locale() {
+      // делаем проверку на ключ. если меняется, то рендерим заново сайдбар
+      return this.$store.getters.info.locale;
     },
   },
   watch: {

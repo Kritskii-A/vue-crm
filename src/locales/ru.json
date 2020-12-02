@@ -1,3 +1,12 @@
 {
-  "ProfileTitle": "Профиль"
+  "Profile": "Профиль",
+  "Name": "Имя",
+  "Message-EnterName": "Введите имя",
+  "Update": "Обновить",
+  "Logout": "Выйти",
+  "Menu-Bill": "Счет",
+  "Menu-History": "История",
+  "Menu-Planing": "Планирование",
+  "Menu-NewRecord": "Новая запись",
+  "Menu-Categories": "Категории"
 }

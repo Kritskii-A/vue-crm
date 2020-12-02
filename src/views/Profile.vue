@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>{{ "ProfileTitle" | localize }}</h3>
+      <h3>{{ "Profile" | localize }}</h3>
     </div>
 
     <form class="form" @submit.prevent="submitHandler">
@@ -14,11 +14,11 @@
             invalid: $v.name.$dirty && !$v.name.required,
           }"
         />
-        <label for="description">Имя</label>
+        <label for="description">{{ "Name" | localize }}</label>
         <small
           class="helper-text invalid"
           v-if="$v.name.$dirty && !$v.name.required"
-          >Введите имя</small
+          >{{ "Message-EnterName" | localize }}</small
         >
       </div>
 
@@ -32,7 +32,7 @@
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
-        Обновить
+        {{ "Update" | localize }}
         <i class="material-icons right">send</i>
       </button>
     </form>

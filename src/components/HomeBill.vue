@@ -22,7 +22,8 @@ export default {
   computed: {
     base() {
       return (
-        this.$store.getters.info.bill / (this.rates["RUB"] / this.rates["EUR"])
+        //this.$store.getters.info.bill / (this.rates["RUB"] / this.rates["EUR"])
+        this.$store.getters.info.bill
       ); // получаем количество денег у пользователя в EUR
     },
   },

@@ -28,7 +28,9 @@ export default new Vuex.Store({
        const result = await fetch(
         `http://data.fixer.io/api/latest?access_key=${key}&symbols=USD,EUR,RUB`
       ); // получаем данные */
-      const result = await fetch(`https://stone-abilities.000webhostapp.com/`); // получаем данные
+      const result = await fetch(
+        `https://api.exchangeratesapi.io/latest?base=RUB&symbols=RUB,EUR,USD`
+      ); // получаем данные
       return await result.json(); // распарсим и возвращаем данные
     },
   },

@@ -3,9 +3,11 @@
     <Loader v-if="loading" />
     <div v-else-if="record">
       <div class="breadcrumb-wrap">
-        <router-link to="/history" class="breadcrumb">История</router-link>
+        <router-link to="/history" class="breadcrumb">{{
+          "History" | localize
+        }}</router-link>
         <a @click.prevent class="breadcrumb">
-          {{ record.type === "income" ? "Доход" : "Расход" }}
+          {{ breadcrumb() }}
         </a>
       </div>
       <div class="row">
@@ -13,13 +15,16 @@
           <div class="card" :class="record.type === 'income' ? 'green' : 'red'">
             <div class="card-content white-text">
               <p>
-                Описание: <strong>{{ record.description }}</strong>
+                {{ "Description" | localize }}:
+                <strong>{{ record.description }}</strong>
               </p>
               <p>
-                Сумма: <strong>{{ record.amount | currency }}</strong>
+                {{ "Amount" | localize }}:
+                <strong>{{ record.amount | currency }}</strong>
               </p>
               <p>
-                Категория: <strong>{{ record.categoryName }}</strong>
+                {{ "Category" | localize }}:
+                <strong>{{ record.categoryName }}</strong>
               </p>
 
               <small>{{ record.date | date("datetime") }}</small>
@@ -28,11 +33,12 @@
         </div>
       </div>
     </div>
-    <p class="center" v-else>Такой записи нет</p>
+    <p class="center" v-else>{{ "Record-Undefined" | localize }}</p>
   </div>
 </template>
 
 <script>
+import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 export default {
   name: "detail",
 
@@ -54,6 +60,11 @@ export default {
     };
 
     this.loading = false;
+  },
+  methods: {
+    breadcrumb() {
+      return localizeFilter("Income");
+    },
   },
 };
 </script>

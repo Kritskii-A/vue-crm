@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>История записей</h3>
+      <h3>{{ "History-Records" | localize }}</h3>
     </div>
 
     <div class="history-chart">
@@ -10,8 +10,8 @@
 
     <Loader v-if="loading" />
     <p class="center" v-else-if="!records.length">
-      Записи не найдены.
-      <router-link to="/record">Добавить новую запись</router-link>
+      {{ "NoEntriesFound" | localize }}
+      <router-link to="/record">{{ "AddNewRecord" | localize }}</router-link>
     </p>
     <section v-else>
       <HistoryTable :records="items" />
@@ -20,8 +20,8 @@
         v-model="page"
         :page-count="pageCount"
         :click-handler="pageChangeHandler"
-        :prev-text="'Назад'"
-        :next-text="'Вперед'"
+        :prev-text="localizeFilter('Prev')"
+        :next-text="localizeFilter('Next')"
         :container-class="'pagination center'"
         :page-class="'waves-effect'"
       />
@@ -32,6 +32,7 @@
 <script>
 import paginationMixin from "@/mixins/pagination.mixin";
 import HistoryTable from "@/components/HistoryTable";
+import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 import { Pie } from "vue-chartjs"; // подключаем графики
 export default {
   name: "history",
@@ -59,7 +60,10 @@ export default {
             categoryName: categories.find((c) => c.id === record.categoryId)
               .title, // получаем название категории
             typeClass: record.type === "income" ? "green" : "red", // выводим цвет поля тип
-            typeText: record.type === "income" ? "Доход" : "Расход", // выводим текст поля тип
+            typeText:
+              record.type === "income"
+                ? localizeFilter("Income")
+                : localizeFilter("Outcome"), // выводим текст поля тип
 
             number: index + 1, // нумерация полей
           };
@@ -70,7 +74,7 @@ export default {
         labels: categories.map((c) => c.title), //подгружаем категории на графики
         datasets: [
           {
-            label: "Расходы по категориям",
+            label: localizeFilter("ExpensesByCategory"),
             data: categories.map((c) => {
               // подтягиваем данные по тратам для построения в график
               return this.records.reduce((total, r) => {
@@ -100,6 +104,9 @@ export default {
           },
         ],
       });
+    },
+    localizeFilter(value) {
+      return localizeFilter(value);
     },
   },
   watch: {

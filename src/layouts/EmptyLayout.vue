@@ -6,6 +6,7 @@
 
 <script>
 import messages from "@/commons/messages";
+import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 
 export default {
   computed: {
@@ -15,7 +16,9 @@ export default {
   },
   watch: {
     error(fbError) {
-      this.$error(messages[fbError.code] || "Что-то пошло не так");
+      this.$error(
+        messages[fbError.code] || localizeFilter("SomethingHadGoneWrong")
+      );
     },
   },
 };

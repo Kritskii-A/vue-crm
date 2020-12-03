@@ -14,7 +14,7 @@
         <router-link
           class="btn-floating btn-large blue"
           to="/record"
-          v-tooltip="'Создать новую запись'"
+          v-tooltip="localizeFilter('AddNewRecord')"
           data-position="left"
         >
           <i class="large material-icons">add</i>
@@ -28,6 +28,7 @@
 import Navbar from "@/components/app/Navbar";
 import Sidebar from "@/components/app/Sidebar";
 import messages from "@/commons/messages";
+import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 export default {
   name: "main-layout",
   data: () => ({
@@ -51,6 +52,11 @@ export default {
     locale() {
       // делаем проверку на ключ. если меняется, то рендерим заново сайдбар
       return this.$store.getters.info.locale;
+    },
+  },
+  methods: {
+    localizeFilter(value) {
+      return localizeFilter(value);
     },
   },
   watch: {

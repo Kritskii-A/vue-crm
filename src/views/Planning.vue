@@ -1,22 +1,25 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Планирование</h3>
+      <h3>{{ "Planning" | localize }}</h3>
       <h4>{{ info.bill | currency("RUB") }}</h4>
     </div>
 
     <loader v-if="loading" />
 
     <p class="center" v-else-if="!categories.length">
-      Категории не найдены.
-      <router-link to="/categories">Добавить новую категорию</router-link>
+      {{ "Categories-Empty" | localize }}
+      <router-link to="/categories">{{
+        "AddNewCategory" | localize
+      }}</router-link>
     </p>
 
     <section v-else>
       <div v-for="cat of categories" :key="cat.id">
         <p>
           <strong>{{ cat.title }}:</strong>
-          {{ cat.spend | currency }} из {{ cat.limit | currency }}
+          {{ cat.spend | currency }} {{ "Of" | localize }}
+          {{ cat.limit | currency }}
         </p>
         <div class="progress" v-tooltip="cat.tooltip" data-position="top">
           <div
@@ -33,6 +36,7 @@
 <script>
 import { mapGetters } from "vuex"; // для вывода состояние счета
 import currencyFilter from "@/filters/currency.filter"; // испортируем фильтр для вывода значений
+import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 import Loader from "../components/app/Loader.vue";
 export default {
   components: { Loader },
@@ -64,7 +68,7 @@ export default {
       // считаем сколько осталось или на сколько превысили
       const tooltipValue = cat.limit - spend;
       const tooltip = `${
-        tooltipValue < 0 ? "Превышение на" : "Осталось"
+        tooltipValue < 0 ? localizeFilter("Excess") : localizeFilter("Remained")
       } ${currencyFilter(Math.abs(tooltipValue))}`;
 
       return {

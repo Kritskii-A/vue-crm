@@ -40,6 +40,9 @@ import localizeFilter from "@/filters/localize.filter"; // подключаем 
 import Loader from "../components/app/Loader.vue";
 export default {
   components: { Loader },
+  metaInfo() {
+    return { title: this.$title("Planning") };
+  },
   name: "planning",
   data: () => ({
     loading: true,

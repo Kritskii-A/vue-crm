@@ -47,5 +47,8 @@
   "AccountInTheCurrency": "Account in the currency",
   "ExchangeRate": "Exchange rate",
   "Currency": "Currency",
-  "Course": "Course"
+  "Course": "Course",
+  "DetailRecord": "Detail record",
+  "Login": "Login",
+  "Registration": "Registration"
 }

@@ -36,6 +36,9 @@ import localizeFilter from "@/filters/localize.filter"; // подключаем 
 import { Pie } from "vue-chartjs"; // подключаем графики
 export default {
   name: "history",
+  metaInfo() {
+    return { title: this.$title("History") };
+  },
   extends: Pie,
   mixins: [paginationMixin],
   data: () => ({

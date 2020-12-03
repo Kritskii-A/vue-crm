@@ -24,6 +24,9 @@ import HomeCurrency from "@/components/HomeCurrency";
 import Loader from "../components/app/Loader.vue";
 export default {
   name: "Home",
+  metaInfo() {
+    return { title: this.$title("Bill") };
+  },
   data: () => ({
     loading: true, // указываем данные пол умолчанию
     currency: null, // храним данные с сервера, отвечает за валюты

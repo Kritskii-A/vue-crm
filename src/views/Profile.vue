@@ -43,6 +43,9 @@
 import { mapGetters, mapActions } from "vuex"; // mapGetters - если будем получать данные, mapActions - если будем отправлять данные
 import { required } from "vuelidate/lib/validators"; // импортируем валидаторы, которые будем использовать
 export default {
+  metaInfo() {
+    return { title: this.$title("Profile") };
+  },
   data: () => ({
     name: "",
     isRuLocale: true,

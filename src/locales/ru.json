@@ -47,5 +47,8 @@
   "AccountInTheCurrency": "Счет в валюте",
   "ExchangeRate": "Курс валют",
   "Currency": "Валюта",
-  "Course": "Курс"
+  "Course": "Курс",
+  "DetailRecord": "Детали записи",
+  "Login": "Авторизация",
+  "Registration": "Регистрация"
 }

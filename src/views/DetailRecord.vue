@@ -41,6 +41,9 @@
 import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 export default {
   name: "detail",
+  metaInfo() {
+    return { title: this.$title("DetailRecord") };
+  },
 
   data: () => ({
     record: null,

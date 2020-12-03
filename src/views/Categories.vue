@@ -28,6 +28,9 @@ import Loader from "../components/app/Loader.vue";
 
 export default {
   name: "categories", // имя этой страницы
+  metaInfo() {
+    return { title: this.$title("Categories") };
+  },
   data: () => ({
     categories: [],
     loading: true,

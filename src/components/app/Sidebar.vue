@@ -12,6 +12,7 @@
     </router-link>
   </ul>
 </template>
+
 <script>
 import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
 export default {

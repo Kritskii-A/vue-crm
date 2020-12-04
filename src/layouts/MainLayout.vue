@@ -32,7 +32,7 @@ import localizeFilter from "@/filters/localize.filter"; // подключаем 
 export default {
   name: "main-layout",
   data: () => ({
-    isOpen: true,
+    isOpen: false,
     loading: true,
   }),
   async mounted() {
@@ -66,3 +66,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@media only screen and (max-width: 992px) {
+  .app-content {
+    padding-left: 0 !important;
+  }
+}
+</style>

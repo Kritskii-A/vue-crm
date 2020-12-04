@@ -54,6 +54,44 @@ export default {
         throw e; // останавливаем после ошибки
       }
     },
+    async deleteCategory({ commit, dispatch }, id) {
+      try {
+        const uid = await dispatch("getUid"); // ждем и получаем uid пользователя
+        await firebase
+          .database()
+          .ref(`/users/${uid}/categories`)
+          .child(id) // ищем по id
+          .remove();
+
+        const records =
+          (
+            await firebase
+              .database()
+              .ref(`/users/${uid}/records`)
+              .once("value")
+          ) //получаем значения
+            .val() || {}; // получаем значения, и если вдруг ничего нет, то пвозвращаем пустой объект
+
+        const allRecords = Object.keys(records).map((key) => ({
+          ...records[key],
+          id: key,
+        }));
+
+        //пробегаемся и сносим все данные, если id записи совпадает с id категории
+        allRecords.forEach((element) => {
+          if (element.categoryId === id) {
+            firebase
+              .database()
+              .ref(`/users/${uid}/records`)
+              .child(element.id) // ищем по id
+              .remove();
+          }
+        });
+      } catch (e) {
+        commit("setError", e); // передаем ошибку
+        throw e; // останавливаем после ошибки
+      }
+    },
     async updateCategory({ commit, dispatch }, { title, limit, id }) {
       try {
         const uid = await dispatch("getUid"); // ждем и получаем uid пользователя

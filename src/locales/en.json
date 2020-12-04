@@ -50,5 +50,7 @@
   "Course": "Course",
   "DetailRecord": "Detail record",
   "Login": "Login",
-  "Registration": "Registration"
+  "Registration": "Registration",
+  "Delete": "Delete",
+  "DeleteCategory": "Deleted category"
 }

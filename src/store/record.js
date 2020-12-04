@@ -14,6 +14,19 @@ export default {
         throw e;
       }
     },
+    async deleteRecord({ dispatch, commit }, id) {
+      try {
+        const uid = await dispatch("getUid"); // ждем и получаем uid пользователя
+        await firebase
+          .database()
+          .ref(`/users/${uid}/records`)
+          .child(id) // ищем по id
+          .remove();
+      } catch (e) {
+        commit("setError", e);
+        throw e;
+      }
+    },
     async fetchRecords({ dispatch, commit }) {
       try {
         const uid = await dispatch("getUid"); // ждем и получаем uid пользователя

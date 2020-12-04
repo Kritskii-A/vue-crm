@@ -33,6 +33,7 @@
 import paginationMixin from "@/mixins/pagination.mixin";
 import HistoryTable from "@/components/HistoryTable";
 import localizeFilter from "@/filters/localize.filter"; // подключаем функцию для фильтрации в объекте
+import messages from "@/commons/messages";
 import { Pie } from "vue-chartjs"; // подключаем графики
 export default {
   name: "history",
@@ -46,6 +47,10 @@ export default {
     records: [],
   }),
   async mounted() {
+    // выводим сообщение, если такое есть
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message]);
+    }
     this.records = await this.$store.dispatch("fetchRecords"); // получаем записи
     const categories = await this.$store.dispatch("fetchCategories"); // получаем категории
 

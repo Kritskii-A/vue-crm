@@ -50,5 +50,7 @@
   "Course": "Курс",
   "DetailRecord": "Детали записи",
   "Login": "Авторизация",
-  "Registration": "Регистрация"
+  "Registration": "Регистрация",
+  "Delete": "Удалить",
+  "DeleteCategory": "Категория удалена"
 }

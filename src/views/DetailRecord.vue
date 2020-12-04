@@ -32,6 +32,9 @@
           </div>
         </div>
       </div>
+      <button class="btn red" @click="deleteRecord">
+        {{ "Delete" | localize }}
+      </button>
     </div>
     <p class="center" v-else>{{ "Record-Undefined" | localize }}</p>
   </div>
@@ -67,6 +70,13 @@ export default {
   methods: {
     breadcrumb() {
       return localizeFilter("Income");
+    },
+    deleteRecord() {
+      this.loading = true;
+      const id = this.$route.params.id; // получаем айди из строки браузера
+      this.$store.dispatch("deleteRecord", id);
+      this.loading = false;
+      this.$router.push("/history?message=deleted");
     },
   },
 };

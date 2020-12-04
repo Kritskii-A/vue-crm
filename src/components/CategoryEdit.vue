@@ -51,6 +51,11 @@
           <i class="material-icons right">send</i>
         </button>
       </form>
+      <div style="padding-top: 1rem;">
+        <button class="btn red" @click="deleteCategory">
+          {{ "Delete" | localize }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -116,6 +121,17 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    async deleteCategory() {
+      this.$store.dispatch("deleteCategory", this.current);
+
+      const categoryData = {
+        id: this.current,
+        title: this.title,
+        limit: this.limit,
+      };
+      this.$emit("updatedAfterDeleted", categoryData);
+      this.$message(localizeFilter("DeleteCategory"));
     },
   },
   mounted() {

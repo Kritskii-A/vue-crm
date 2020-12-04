@@ -14,6 +14,7 @@
           :categories="categories"
           :key="categories.length + updateCount"
           @updated="updateCategories"
+          @updatedAfterDeleted="updateInfo"
         />
         <p v-else class="center">{{ "Categories-Empty" | localize }}</p>
       </div>
@@ -55,6 +56,11 @@ export default {
       this.categories[idx].title = category.title;
       this.categories[idx].limit = category.limit;
       this.updateCount++;
+    },
+    async updateInfo() {
+      this.loading = true;
+      this.categories = await this.$store.dispatch("fetchCategories"); // после удаления обновим содержимоесодержимое в categories
+      this.loading = false;
     },
   },
 };

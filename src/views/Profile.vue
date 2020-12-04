@@ -22,6 +22,24 @@
         >
       </div>
 
+      <div class="input-field">
+        <input
+          id="bill"
+          type="text"
+          v-model="bill"
+          :class="{
+            invalid: $v.bill.$dirty && !$v.bill.minValue,
+          }"
+        />
+        <label for="description">{{ "Bill" | localize }}</label>
+        <span
+          class="helper-text invalid"
+          v-if="$v.bill.$dirty && !$v.bill.minValue"
+          >{{ "MinimumValue" | localize }}
+          {{ $v.bill.$params.minValue.min }}</span
+        >
+      </div>
+
       <div class="switch">
         <label>
           English
@@ -41,20 +59,24 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"; // mapGetters - если будем получать данные, mapActions - если будем отправлять данные
-import { required } from "vuelidate/lib/validators"; // импортируем валидаторы, которые будем использовать
+import { required, minValue } from "vuelidate/lib/validators"; // импортируем валидаторы, которые будем использовать
 export default {
   metaInfo() {
     return { title: this.$title("Profile") };
   },
   data: () => ({
     name: "",
+    bill: "",
     isRuLocale: true,
   }),
   validations: {
     name: { required },
+    bill: { minValue: minValue(100) },
   },
   mounted() {
     this.name = this.info.name; // вставляем имя
+    this.bill = this.info.bill; // вставляем имя
+
     this.isRuLocale = this.info.locale === "ru-RU"; // проверяем какая локализация стоит у пользователя
     // таймаут нужен, чтобы успела отрендериться страница
     setTimeout(() => {
@@ -72,6 +94,7 @@ export default {
       try {
         await this.updateInfo({
           name: this.name,
+          bill: this.bill,
           locale: this.isRuLocale ? "ru-RU" : "en-US", // записываем в БД локализацию
         });
         this.$message("Данные обновлены");
